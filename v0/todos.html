@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todos V0</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <input id="input-todo" placeholder="What needs to be done?" autofocus>
+  <ul id="todo-list"></ul>
+
+  <script>
+    var todos = [];
+    var inputTodo = document.getElementById('input-todo');
+    var todoList = document.getElementById('todo-list');
+
+    function generateId() {
+      return todos.length ? Math.max.apply(null, todos.map(function (todo) {
+        return todo.id;
+      })) + 1 : 1;
+    }
+
+    function addTodo(content) {
+      todos = todos.concat([{ id: generateId(), content: content, completed: false }]);
+    }
+
+    function removeTodo(id) {
+      todos = todos.filter(function (todo) {
+        return todo.id !== +id;
+      });
+    }
+
+    function toggleCompletedById(id) {
+      todos = todos.map(function (todo) {
+        return todo.id === +id ? Object.assign({}, todo, { completed: !todo.completed }) : todo;
+      });
+    }
+
+    function rendarTodos() {
+      // todos 배열을 HTML로 변환
+      var html = '';
+      if (!todos.length) {
+        todoList.innerHTML = '';
+        return;
+      }
+
+      todos.forEach(function (todo) {
+        var checked = todo.completed ? 'checked' : '';
+        html += '<li id="' + todo.id + '">';
+        html += '<input type="checkbox" ' + checked + '>';
+        html += todo.content;
+        html += ' &nbsp; <button>x</button>';
+        html += '</li>';
+      });
+      todoList.innerHTML = html;
+    }
+
+    window.addEventListener('load', function () {
+      // 서버에 접속하여 todos 배열을 취득한다
+      var req = new XMLHttpRequest();
+      req.open('GET', 'http://localhost:3000/todos');
+      req.send();
+
+      req.onreadystatechange = function () {
+        if (req.readyState === XMLHttpRequest.DONE) {
+          if (req.status === 200) {
+            todos = JSON.parse(req.responseText);
+            rendarTodos();
+          } else {
+            console.log('Error!');
+          }
+        }
+      };
+
+      // todos = [
+      //   { id: 1, content: 'HTML5', completed: true },
+      //   { id: 2, content: 'CSS3', completed: true },
+      //   { id: 3, content: 'Javascript', completed: false }
+      // ];
+      // rendarTodos();
+    });
+
+    inputTodo.addEventListener('keyup', function (e) {
+      if (e.keyCode !== 13 || !this.value) return;
+      addTodo(this.value);
+      this.value = '';
+      rendarTodos();
+    });
+
+    todoList.addEventListener('click', function (e) {
+      if (e.target && e.target.nodeName === 'BUTTON') {
+        removeTodo(e.target.parentNode.id);
+      } else if (e.target && e.target.nodeName === 'LI') {
+        toggleCompletedById(e.target.id);
+      }
+      rendarTodos();
+    });
+  </script>
+</body>
+</html>

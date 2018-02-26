@@ -1,7 +1,7 @@
 # Custom
-json
+*.json
 node_modules
-eslintrc
+.eslintrc.js
 
 # Logs
 logs

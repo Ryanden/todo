@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todos V0</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="todo-wrap">
+    <input id="input-todo" placeholder="What needs to be done?" autofocus>
+    <ul id="todo-list" class="todo-list"></ul>
+    <button id="all-check" class="all-check">전체 선택</button>
+    <br><br><div>완료한 목록 : <span id="each-comp"></span>개</div>
+  </div>
+  
+  <script>
+    var input = document.getElementById('input-todo');
+    var list = document.getElementById('todo-list');
+    var allCheckBtn = document.getElementById('all-check');
+    var eachComp = document.getElementById('each-comp');
+    var todos = [];
+
+    addEventListener('load', function () {
+    todos = [
+        { id: 3, content: 'HTML', completed: false },
+        { id: 2, content: 'CSS', completed: true },
+        { id: 1, content: 'Javascript', completed: false }
+    ];
+    todoInit(todos);
+    });
+    
+    function todoInit(todos) {
+        // console.log(todos);
+        todos = todos.map(function (todo) {
+            var doit = todo.completed ? 'checked' : '';
+            return '<li data-id="' + todo.id + '"><input type="checkbox"'+ doit +'>' + todo.content + '<button>delete</button></li>';
+        });
+        list.innerHTML = todos.join('');
+        eachComp.innerHTML = eachByComp();
+    }
+
+    function getIds() {
+        return todos.map(function (todo) {
+            return todo.id;
+        })
+    }
+    // var ids = getIds();
+    
+    function getMax() {
+        return Math.max.apply(null, getIds()) > 0 ? Math.max.apply(null, getIds()) : 0;
+    }
+
+    function addTodo(newTodo) {
+        // todos.forEach(function (todo) {
+        //     if (todo.content === newTodo.content) {
+        //         alert('동일한 항목이 존재합니다.');
+        //         return;
+        //     }
+        // });
+        todos = [newTodo].concat(todos);
+    }
+
+    function delTodo(id) {
+        todos = todos.filter(function (todo) {
+            return todo.id !== id;
+        })
+    }
+
+    function changeComp(id) {
+        todos = todos.map(function (todo) {
+            return todo.id === id ? Object.assign({}, todo, { completed: !todo.completed }) : todo;
+        });
+    }
+
+    function allTrue() {
+        if (todos.length < 1) return;
+        todos = todos.map(function (todo) {
+            return eachByComp() === todos.length ? Object.assign({}, todo, { completed: false }) : Object.assign({}, todo, { completed: true });
+        });
+    }
+
+    function eachByComp() {
+        todoLen = todos.filter(function (todo) {
+            return todo.completed === true;
+        });
+        return todoLen.length;
+    }
+
+    input.addEventListener('keyup', function (e) {
+        if (this.value && e.keyCode === 13) {
+            addTodo({ id: getMax() + 1, content: this.value, completed: false });
+            console.log(todos);
+            this.value = '';
+            todoInit(todos);
+        }
+    });
+
+    list.addEventListener('click', function (e) {
+        if (!e.target) return;
+        var currentItem = +e.target.parentNode.getAttribute('data-id');
+        if (e.target.nodeName === 'BUTTON') {
+            delTodo(currentItem);
+        } else if (e.target.nodeName === 'INPUT') {
+            changeComp(currentItem);
+        }
+        todoInit(todos);
+    });
+
+    allCheckBtn.addEventListener('click', function (e) {
+        if (!e.target) return;
+        allTrue();
+        todoInit(todos);
+    });
+  </script>
+</body>
+</html>
