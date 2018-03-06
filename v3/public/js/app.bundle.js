@@ -12565,6 +12565,8 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 (function () {
   var todos = [];
   var status = 'all';
@@ -12638,7 +12640,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   };
 
   var getMax = function getMax() {
-    return todos.length ? Math.max.apply(null, getIds()) + 1 : 1;
+    return todos.length ? Math.max.apply(Math, _toConsumableArray(getIds())) + 1 : 1;
   };
 
   var addTodo = function addTodo(newTodo) {

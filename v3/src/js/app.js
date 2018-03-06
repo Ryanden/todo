@@ -68,13 +68,9 @@ import axios from 'axios';
       .catch(err => console.log(err.response));
   };
 
-  const getIds = () => {
-    return todos.map(todo => todo.id);
-  };
+  const getIds = () => todos.map(todo => todo.id);
 
-  const getMax = () => {
-    return todos.length ? Math.max.apply(null, getIds()) + 1 : 1;
-  };
+  const getMax = () => (todos.length ? Math.max(...getIds()) + 1 : 1);
 
   const addTodo = newTodo => {
     axios.post('/todos', newTodo) // payload: { id, content, completed }
