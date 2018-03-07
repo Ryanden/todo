@@ -12643,8 +12643,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     return todos.length ? Math.max.apply(Math, _toConsumableArray(getIds())) + 1 : 1;
   };
 
-  var addTodo = function addTodo(newTodo) {
-    _axios2.default.post('/todos', newTodo) // payload: { id, content, completed }
+  var addTodo = function addTodo(content) {
+    var payload = { id: getMax(), content: content, completed: false };
+    _axios2.default.post('/todos', payload) // payload: { id, content, completed }
     .then(function (_ref2) {
       var data = _ref2.data;
 
@@ -12714,7 +12715,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   inputTodo.addEventListener('keyup', function (e) {
     if (!e.currentTarget.value || e.keyCode !== 13) return;
-    addTodo({ id: getMax(), content: e.currentTarget.value, completed: false });
+    addTodo(e.currentTarget.value);
     e.currentTarget.value = '';
   });
 

@@ -72,8 +72,9 @@ import axios from 'axios';
 
   const getMax = () => (todos.length ? Math.max(...getIds()) + 1 : 1);
 
-  const addTodo = newTodo => {
-    axios.post('/todos', newTodo) // payload: { id, content, completed }
+  const addTodo = content => {
+    const payload = { id: getMax(), content, completed: false }
+    axios.post('/todos', payload) // payload: { id, content, completed }
       .then(({ data }) => {
         console.log('[ADD]\n', data);
         getTodos();
@@ -127,7 +128,7 @@ import axios from 'axios';
 
   inputTodo.addEventListener('keyup', e => {
     if (!e.currentTarget.value || e.keyCode !== 13) return;
-    addTodo({ id: getMax(), content: e.currentTarget.value, completed: false });
+    addTodo(e.currentTarget.value);
     e.currentTarget.value = '';
   });
 
