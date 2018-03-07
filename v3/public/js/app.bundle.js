@@ -12710,9 +12710,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     renderTodos();
   };
 
-  window.addEventListener('load', function () {
-    getTodos();
-  });
+  window.addEventListener('load', getTodos);
 
   inputTodo.addEventListener('keyup', function (e) {
     if (!e.currentTarget.value || e.keyCode !== 13) return;

@@ -123,9 +123,7 @@ import axios from 'axios';
     renderTodos();
   };
 
-  window.addEventListener('load', () => {
-    getTodos();
-  });
+  window.addEventListener('load', getTodos);
 
   inputTodo.addEventListener('keyup', e => {
     if (!e.currentTarget.value || e.keyCode !== 13) return;
