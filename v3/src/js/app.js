@@ -13,12 +13,12 @@ import axios from 'axios';
   const navItem = document.querySelectorAll('.nav li');
 
   const activeLength = () => {
+    let plural = '';
     activeNumber.innerHTML = todos.filter(todo => !todo.completed).length;
-    if (todos.filter(todo => !todo.completed).length <= 1) {
-      activeNumber.nextSibling.textContent = ' item left';
-    } else {
-      activeNumber.nextSibling.textContent = ' items left';
+    if (todos.filter(todo => !todo.completed).length > 1) {
+      plural = 's';
     }
+    activeNumber.nextSibling.textContent = ` item${plural} left`;
   };
 
   const completedLength = () => {

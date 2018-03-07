@@ -12580,16 +12580,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   var navItem = document.querySelectorAll('.nav li');
 
   var activeLength = function activeLength() {
+    var plural = '';
     activeNumber.innerHTML = todos.filter(function (todo) {
       return !todo.completed;
     }).length;
     if (todos.filter(function (todo) {
       return !todo.completed;
-    }).length <= 1) {
-      activeNumber.nextSibling.textContent = ' item left';
-    } else {
-      activeNumber.nextSibling.textContent = ' items left';
+    }).length > 1) {
+      plural = 's';
     }
+    activeNumber.nextSibling.textContent = ' item' + plural + ' left';
   };
 
   var completedLength = function completedLength() {
