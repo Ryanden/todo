@@ -160,7 +160,7 @@ import axios from 'axios';
         navItem[i].className = '';
       }
       e.target.parentNode.className = 'active';
-      status = e.target.parentNode.getAttribute('id');
+      status = e.target.parentNode.id;
       renderTodos();
     }
   });
