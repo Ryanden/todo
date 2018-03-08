@@ -73,7 +73,7 @@ import axios from 'axios';
   const getMax = () => (todos.length ? Math.max(...getIds()) + 1 : 1);
 
   const addTodo = content => {
-    const payload = { id: getMax(), content, completed: false }
+    const payload = { id: getMax(), content, completed: false };
     axios.post('/todos', payload) // payload: { id, content, completed }
       .then(({ data }) => {
         console.log('[ADD]\n', data);
