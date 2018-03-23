@@ -1,0 +1,23 @@
+.nav {
+  margin: 15px;
+  text-transform: capitalize;
+}
+
+.nav > li {
+  cursor: pointer;
+}
+
+.nav.nav-xs > li > a {
+  padding: 4px 10px;
+}
+
+.nav-pills > li.active > a {
+  color: #fff !important;
+  background-color: #23b7e5;
+}
+
+.nav-pills>li.active>a:active,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+  background-color: #19a9d5;
+}
