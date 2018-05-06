@@ -1,0 +1,25 @@
+.list-group-item {
+  padding-left: 0;
+  padding-right: 15px;
+  border-color: #e7ecee;
+}
+
+.hover-anchor {
+  height: 30px;
+  line-height: 30px;
+}
+
+.hover-action {
+  display: none;
+}
+
+.list-group-item:hover .hover-action {
+  display: block;
+  transition: all .2s;
+}
+
+.hover-action > span {
+  font-size: 18px;
+  top: 5px;
+  cursor: pointer;
+}

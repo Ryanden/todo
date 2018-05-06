@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h1 class="title">Todos</h1>
+
+      <todo-form></todo-form>
+
+      <ng-container *ngIf="todoService.todos">
+        <todo-nav 
+          [navItems]="navItems"
+          [selectedItem]="selectedItem"
+          (changeNavItem)="selectedItem=$event">
+        </todo-nav>
+
+        <todo-list [selectedItem]="selectedItem">
+        </todo-list>
+
+        <todo-footer>
+        </todo-footer>
+      </ng-container>
+    </div>
+  </div>
+  <br>
+  <pre>{{ todoService.todos | json }}</pre>
+</div>
